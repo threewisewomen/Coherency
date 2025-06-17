@@ -1,43 +1,7 @@
-version: '3.8'
+# Coherency - Data Echelon Only
+# This file launches only the required data services: PostgreSQL, MongoDB, and Redis.
 
 services:
-  # Main C# Backend Service
-  backend:
-    container_name: coherency-backend
-    build:
-      context: ./zoe/roots
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080" # Kestrel web server
-      - "8081:8081" # For HTTPS in dev
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:8081;http://+:8080
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=yourpassword # For dev SSL
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-      - DatabaseSettings__ConnectionString=Host=postgres;Port=5432;Database=coherency;Username=coherency;Password=password
-      - RedisSettings__ConnectionString=redis:6379
-      - MongoSettings__ConnectionString=mongodb://coherency:password@mongo:27017
-      - MongoSettings__DatabaseName=CoherencyDocStore
-    volumes:
-      - ./zoe/roots:/app # Mount source for hot reload
-      - ~/.aspnet/https/https:/https/ # Mount dev SSL cert
-    depends_on:
-      - postgres
-      - redis
-      - mongo
-
-  # AI/ML Python Service
-  ai-wound-detection:
-    container_name: coherency-ai
-    build:
-      context: ./zoe/companion/wound-detection
-      dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./zoe/companion/wound-detection:/app
-
   # PostgreSQL Database
   postgres:
     container_name: coherency-postgres
@@ -73,6 +37,7 @@ services:
     volumes:
       - redis_data:/data
 
+# Declare the named volumes for data persistence
 volumes:
   postgres_data:
   mongodb_data:

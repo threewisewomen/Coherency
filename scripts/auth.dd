@@ -1,0 +1,19 @@
+POSTGRESQL
+
+Host: localhost 
+Port: 5432
+Database: coherency
+Authentication: PostgreSQL
+Username: coherency
+Password: password
+
+
+
+MONGODB
+
+Host: localhost
+Port: 27017
+Authentication: MongoDB
+User: coherency
+Password: password
+Authentication Database: admin 
