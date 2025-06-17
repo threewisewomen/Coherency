@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  # Main C# Backend Service
+  backend:
+    container_name: coherency-backend
+    build:
+      context: ./zoe/roots
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # Kestrel web server
+      - "8081:8081" # For HTTPS in dev
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:8081;http://+:8080
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=yourpassword # For dev SSL
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - DatabaseSettings__ConnectionString=Host=postgres;Port=5432;Database=coherency;Username=coherency;Password=password
+      - RedisSettings__ConnectionString=redis:6379
+      - MongoSettings__ConnectionString=mongodb://coherency:password@mongo:27017
+      - MongoSettings__DatabaseName=CoherencyDocStore
+    volumes:
+      - ./zoe/roots:/app # Mount source for hot reload
+      - ~/.aspnet/https/https:/https/ # Mount dev SSL cert
+    depends_on:
+      - postgres
+      - redis
+      - mongo
+
+  # AI/ML Python Service
+  ai-wound-detection:
+    container_name: coherency-ai
+    build:
+      context: ./zoe/companion/wound-detection
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./zoe/companion/wound-detection:/app
+
+  # PostgreSQL Database
+  postgres:
+    container_name: coherency-postgres
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=coherency
+      - POSTGRES_USER=coherency
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # MongoDB Document Store
+  mongo:
+    container_name: coherency-mongo
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=coherency
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongodb_data:/data/db
+
+  # Redis Cache
+  redis:
+    container_name: coherency-redis
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  mongodb_data:
+  redis_data:
