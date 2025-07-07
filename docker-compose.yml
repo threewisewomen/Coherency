@@ -1,5 +1,5 @@
 # Coherency - Data Echelon Only
-# This file launches only the required data services: PostgreSQL, MongoDB, and Redis.
+# This file launches only the required data services: PostgreSQL.
 
 services:
   # PostgreSQL Database
@@ -16,29 +16,6 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./scripts/database/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  # MongoDB Document Store
-  mongo:
-    container_name: coherency-mongo
-    image: mongo:6
-    ports:
-      - "27017:27017"
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=coherency
-      - MONGO_INITDB_ROOT_PASSWORD=password
-    volumes:
-      - mongodb_data:/data/db
-
-  # Redis Cache
-  redis:
-    container_name: coherency-redis
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-
 # Declare the named volumes for data persistence
 volumes:
   postgres_data:
-  mongodb_data:
-  redis_data:

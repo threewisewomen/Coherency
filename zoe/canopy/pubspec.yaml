@@ -17,35 +17,28 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # --- State Management ---
-  # The core of our state management strategy using the BLoC pattern.
   flutter_bloc: ^8.1.3
 
-  # --- Networking ---
-  # A powerful and reliable HTTP client for all API communications.
   dio: ^5.3.3
   
   # --- Dependency Injection / Service Location ---
   # A simple service locator for decoupling our app's layers and locating BLoCs/Repositories.
   get_it: ^7.6.4
   
-  # --- Navigation ---
-  # Declarative, URL-based routing perfect for complex apps with deep linking.
   go_router: ^12.1.1
 
-  # --- Functional Programming & Utilities ---
-  # Provides value equality without boilerplate, essential for BLoC states/events.
   equatable: ^2.0.5
-  # Functional programming constructs, mainly for Either<Failure, Success> error handling.
   dartz: ^0.10.1 
   
-  # --- Secure Storage ---
-  # For securely persisting sensitive data like authentication tokens.
   flutter_secure_storage: ^9.0.0
 
-  # --- Environment Variable Management ---
-  # For managing different configurations (dev, staging, prod) via .env files.
   flutter_dotenv: ^5.1.0
+  cupertino_icons: ^1.0.2
+  provider: ^6.1.1
+  http: ^1.1.0
+  shared_preferences: ^2.2.2
+
+  
 
 # =============================================================
 # ==                   DEVELOPMENT DEPENDENCIES              ==
@@ -54,29 +47,49 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # --- Code Generation & Linting ---
-  # A tool to run code generators, essential if we use things like Freezed or Retrofit later.
   build_runner: ^2.4.6
-  # The recommended set of linting rules to keep the code clean and consistent.
   flutter_lints: ^3.0.0
+  flutter_native_splash: ^2.3.1
+  flutter_launcher_icons: "^0.14.1"
 
+  
+
+
+# pubspec.yaml
 
 # =============================================================
 # ==                     FLUTTER CONFIGURATION               ==
 # =============================================================
 flutter:
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material.Icons class.
   uses-material-design: true
+  assets:
+    - assets/images/
 
-  # To add assets to your application, add an assets section, like this:
-  # We will add assets like images and .env files here later.
-  # assets:
-  #   - .env
-  #   - assets/images/logo.png
 
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. For details, see
-  # https://flutter.dev/custom-fonts/#from-packages
+# --- CONFIGURATION FOR NATIVE SPLASH SCREEN (FIXES FITTING) ---
+flutter_native_splash:
+  # This property stretches the image to fill the entire screen, giving the
+  # "end-to-end" look you want.
+  # IMPORTANT: Make sure 'Coherency.png' is designed as a background image.
+  background_image: "assets/images/Coherency.png"
+
+  # We use a solid color as a fallback in case the image can't load.
+  color: "#121212"
+
+
+# --- CONFIGURATION FOR APP LAUNCHER ICON (FIXES CIRCLE ZOOM) ---
+flutter_launcher_icons:
+  android: true
+  ios: true
+
+  # The main image path used for iOS and legacy Android.
+  image_path: "assets/images/app_logo.png"
+
+  # --- This is the key for modern Android icons ---
+  # This tells the generator what color to use as the icon background.
+  adaptive_icon_background: "#121212"
+
+  # This tells the generator to use your image as the foreground layer.
+  # It will be "zoomed" to fit properly on top of the background color.
+  adaptive_icon_foreground: "assets/images/app_logo.png"
+

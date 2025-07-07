@@ -1,0 +1,79 @@
+# .NET build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+.vs/
+# Rider
+.idea/
+*.sln.iml
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+
+# NuGet
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/packages/*
+!**/packages/build/
+!**/packages/repositories.config
+
+# DotCover
+*.dotCover
+
+# Logs
+*.log
+
+# Others
+*.vspscc
+*.vssscc
+*.pdb
+*.cache
+*.dbmdl
+*.bak
+*.backup
+*.tmp
+*.temp
+*.vs/
+
+# OS generated files
+[Tt]humbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.DS_Store
+
+# Docker
+**/docker-compose.*.yml
+**/Dockerfile*
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# Local history for Visual Studio
+.localhistory/
+
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# NCrunch
+*.ncrunch*
+.*crunch*.local.xml
+
+# Azure Pipelines
+*.azure-pipelines.yml
+
+# SonarQube
+.sonar/
+
+# Coverage
+coverage/

@@ -1,0 +1,12 @@
+{
+  "username": "john_doe123",
+  "email": "john.doe@example.com",
+  "password": "SecurePassword123!",
+  "firstName": "John",
+  "lastName": "Doe"
+}
+
+{
+  "email": "john.doe@example.com",
+  "password": "SecurePassword123!"
+}
